@@ -3,6 +3,7 @@
 namespace App\Domains\Users\Http\Controllers;
 
 use App\Domains\Users\Http\Requests\IndexRequest;
+use App\Domains\Users\Http\Requests\StoreUserRequest;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
@@ -24,7 +25,7 @@ class UserController extends Controller
         //
     }
 
-    public function store()
+    public function store(StoreUserRequest $request)
     {
         //
     }
