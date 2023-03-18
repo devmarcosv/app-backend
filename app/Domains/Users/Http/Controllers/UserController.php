@@ -28,6 +28,7 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         //
+        
     }
 
     public function update()
