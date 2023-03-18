@@ -35,7 +35,7 @@ class UserController extends Controller
     {
         //
     }
-
+    #TODO:teste
     public function destroy()
     {
         //
