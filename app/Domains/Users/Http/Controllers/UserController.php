@@ -28,7 +28,7 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         //
-        
+
     }
 
     public function update()
@@ -36,7 +36,7 @@ class UserController extends Controller
         //
     }
 
-    public function destroy()
+    public function destroy(int $userid)
     {
         //
     }
