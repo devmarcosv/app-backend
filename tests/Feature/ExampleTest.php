@@ -37,6 +37,14 @@ class ExampleTest extends TestCase
 
     public function test_save_users_is_working()
     {
+        $response = $this->post('api/user', [
+            'name' => 'Marcos vinicius',
+            'password' => '12345678',
+            'email' => 'emaillegal@gmail.com',
+            'date_of_birth' => now()->format('d/m/Y'),
+            'gender' => 'M'
+        ]);
         
+        dd($response);
     }
 }

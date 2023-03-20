@@ -6,6 +6,8 @@ use App\Domains\Users\Http\Requests\IndexRequest;
 use App\Domains\Users\Http\Requests\StoreUserRequest;
 use App\Domains\Users\Services\UserService;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -20,6 +22,8 @@ class UserController extends Controller
     {
         //
         try {
+            DB::beginTransaction();
+
             $service = $this->service->index($request->all());
 
             return response()->json([
@@ -29,6 +33,7 @@ class UserController extends Controller
             ]);
 
         }catch(\Exception $e) {
+            DB::rollBack();
             throw new \Exception('Não foi possivel retornar o usuário:'.$e->getMessage());
         }
 
@@ -42,6 +47,17 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         //
+        try {
+            $user = $this->service->store($request->validated());
+
+            return response()->json([
+                'message' => 'success',
+                'code' => 201
+            ], Response::HTTP_CREATED);
+
+        }catch(\Exception $e){
+            throw new \Exception("houve um erro ao salvar: ".$e->getMessage());
+        }
 
     }
 

@@ -22,7 +22,7 @@ class StoreUserRequest extends FormRequest
         return [
             'name' => 'nullable',
             'email' => 'required|email',
-            'date_of_birth' => 'requied|date_format:d-m-Y',
+            'date_of_birth' => 'required|date_format:d/m/Y',
             'gender' => 'required',
             'password' => 'required|max:8'
         ];

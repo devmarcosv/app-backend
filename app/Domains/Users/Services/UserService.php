@@ -19,4 +19,11 @@ class UserService
 
         return $user;
     }
+
+    public function store(array $user)
+    {
+        $user = $this->repo->createUser($user);
+
+        return $user;
+    }
 }
