@@ -22,8 +22,6 @@ class UserController extends Controller
     {
         //
         try {
-            DB::beginTransaction();
-
             $service = $this->service->index($request->all());
 
             return response()->json([
@@ -33,7 +31,6 @@ class UserController extends Controller
             ]);
 
         }catch(\Exception $e) {
-            DB::rollBack();
             throw new \Exception('Não foi possivel retornar o usuário:'.$e->getMessage());
         }
 
@@ -48,6 +45,8 @@ class UserController extends Controller
     {
         //
         try {
+            DB::beginTransaction();
+
             $user = $this->service->store($request->validated());
 
             return response()->json([
@@ -56,6 +55,7 @@ class UserController extends Controller
             ], Response::HTTP_CREATED);
 
         }catch(\Exception $e){
+            DB::rollBack();
             throw new \Exception("houve um erro ao salvar: ".$e->getMessage());
         }
 
