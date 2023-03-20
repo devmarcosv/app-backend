@@ -51,7 +51,8 @@ class UserController extends Controller
 
             return response()->json([
                 'message' => 'success',
-                'code' => 201
+                'code' => 201,
+                'user' => $user
             ], Response::HTTP_CREATED);
 
         }catch(\Exception $e){

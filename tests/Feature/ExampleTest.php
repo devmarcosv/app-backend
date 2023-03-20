@@ -5,11 +5,13 @@ namespace Tests\Feature;
 // use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class ExampleTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * A basic test example.
      *
@@ -45,6 +47,12 @@ class ExampleTest extends TestCase
             'gender' => 'M'
         ]);
         
-        dd($response);
+        $response->assertCreated();
+        $response->assertJson(fn (AssertableJson $json)
+            => $json->has('message')
+                ->has('code')
+                ->has('user')
+                 
+    );
     }
 }
