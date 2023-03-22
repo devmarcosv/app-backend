@@ -36,8 +36,10 @@ class UserRepository implements IUserRepository
     public function updateUser(int $userId, array $newUser)
     {
         //
-        return User::query()
-        ->where('id', $userId)
-        ->update($newUser);
+        $user = User::query()->find($userId);
+        $userUpdated = $user->updateOrFail($newUser);
+
+        return $userUpdated ? $user->fresh() : null;
+        
     }
 }

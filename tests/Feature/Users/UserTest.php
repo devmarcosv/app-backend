@@ -45,4 +45,32 @@ class UserTest extends TestCase
                  
     );
     }
+
+    public function test_edit_user_is_working()
+    {
+        $this->seed();
+
+        $teste = User::query()->first();
+
+        $response = $this->put("api/user/{$teste->id}", [
+            'name' => 'Monkey D. Luffy',
+            'password' => '12345678',
+            'email' => 'lawtrafalgar@gmail.com',
+            'date_of_birth' => null,
+            'gender' => null
+        ]);
+        $response->assertStatus(200);
+        $response->assertJson(fn (AssertableJson $json)
+            => $json->has('message')
+                    ->has('code')
+                    ->has('user_updated',  fn ($user)
+                        => $user->where('id', 2)            
+                                ->where('name', 'Monkey D. Luffy')
+                                ->where('email', fn ($email)
+                                    => str($email)->is('lawtrafalgar@gmail.com')
+                                )
+                                ->etc()
+        )
+    );
+    }
 }

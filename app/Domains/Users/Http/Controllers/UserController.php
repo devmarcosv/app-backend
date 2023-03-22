@@ -4,6 +4,7 @@ namespace App\Domains\Users\Http\Controllers;
 
 use App\Domains\Users\Http\Requests\IndexRequest;
 use App\Domains\Users\Http\Requests\StoreUserRequest;
+use App\Domains\Users\Http\Requests\UpdateUserRequest;
 use App\Domains\Users\Services\UserService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
@@ -62,9 +63,21 @@ class UserController extends Controller
 
     }
 
-    public function update()
+    public function update(UpdateUserRequest $request, int $userId)
     {
         //
+        try {
+            $user = $this->service->update($request->validated(), $userId);
+
+            return response()->json([
+                'message' => 'success',
+                'code' => 200,
+                'user_updated' => $user
+            ], Response::HTTP_OK);
+
+        }catch(\Exception $e){
+            throw new \Exception("Houve um erro ao atualizar: ".$e->getMessage());
+        }
     }
 
     public function destroy()
