@@ -22,6 +22,13 @@ class UserService
         return $user;
     }
 
+    public function show(int $userId)
+    {
+        $user = $this->repo->getUserById($userId);
+
+        return $user;
+    }
+
     public function store(array $user)
     {
         $user = $this->repo->createUser($user);

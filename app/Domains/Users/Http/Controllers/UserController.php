@@ -37,14 +37,19 @@ class UserController extends Controller
 
     }
 
-    public function show()
+    public function show(int $userId)
     {
         //
+        $user = $this->service->show($userId);
+
+        return response()->json([
+            'message' => 'success',
+            'user' => $user
+        ], Response::HTTP_OK);
     }
 
     public function store(StoreUserRequest $request)
     {
-        //
         try {
             DB::beginTransaction();
 
@@ -65,7 +70,6 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, int $userId)
     {
-        //
         try {
             $user = $this->service->update($request->validated(), $userId);
 

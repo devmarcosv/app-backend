@@ -70,7 +70,17 @@ class UserTest extends TestCase
                                     => str($email)->is('lawtrafalgar@gmail.com')
                                 )
                                 ->etc()
-        )
-    );
-    }
+         )
+        );
+     }
+
+     public function test_get_user_by_id_is_working()
+     {
+        $this->seed();
+
+        $user = User::query()->first();
+
+        $response = $this->get("api/user/{$user->id}");
+        $response->assertStatus(200);
+     }
 }
