@@ -39,7 +39,12 @@ class UserController extends Controller
 
     public function show(int $userId)
     {
-        //
+        $isLogged = auth()->user();
+        if(!$isLogged) {
+
+            return response()->json(['error' => 'Unauthenticated.'], 401);
+
+        }
         $user = $this->service->show($userId);
 
         return response()->json([
@@ -51,18 +56,16 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         try {
-            DB::beginTransaction();
-
             $user = $this->service->store($request->validated());
 
             return response()->json([
                 'message' => 'success',
                 'code' => 201,
-                'user' => $user
+                'user' => $user,
+                'token' => $user->createToken('API TOKEN')->plainTextToken
             ], Response::HTTP_CREATED);
 
         }catch(\Exception $e){
-            DB::rollBack();
             throw new \Exception("houve um erro ao salvar: ".$e->getMessage());
         }
 

@@ -5,6 +5,7 @@ namespace Tests\Feature\Users;
 // use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
@@ -12,7 +13,6 @@ use Tests\TestCase;
 class UserTest extends TestCase
 {
     use RefreshDatabase;
-
 
     public function test_index_request_is_working()
     {
@@ -33,7 +33,7 @@ class UserTest extends TestCase
             'name' => 'Marcos vinicius',
             'password' => '12345678',
             'email' => 'emaillegal@gmail.com',
-            'date_of_birth' => now()->format('d/m/Y'),
+            'date_of_birth' => now()->format('Y-m-d'),
             'gender' => 'M'
         ]);
         
@@ -41,6 +41,7 @@ class UserTest extends TestCase
         $response->assertJson(fn (AssertableJson $json)
             => $json->has('message')
                 ->has('code')
+                ->has('token')
                 ->has('user')
                  
     );
@@ -51,6 +52,7 @@ class UserTest extends TestCase
         $this->seed();
 
         $teste = User::query()->first();
+        auth()->login($teste);
 
         $response = $this->put("api/user/{$teste->id}", [
             'name' => 'Monkey D. Luffy',
@@ -79,8 +81,12 @@ class UserTest extends TestCase
         $this->seed();
 
         $user = User::query()->first();
+        auth()->login($user);
 
         $response = $this->get("api/user/{$user->id}");
         $response->assertStatus(200);
      }
-}
+
+
+
+    }

@@ -3,6 +3,7 @@
 namespace App\Domains\Users\Services;
 
 use App\Domains\Users\Database\Repositories\UserRepository;
+use Illuminate\Support\Facades\Hash;
 
 use function PHPUnit\Framework\isNull;
 
@@ -31,6 +32,8 @@ class UserService
 
     public function store(array $user)
     {
+        $user['password'] = Hash::make($user['password']);
+        
         $user = $this->repo->createUser($user);
 
         return $user;

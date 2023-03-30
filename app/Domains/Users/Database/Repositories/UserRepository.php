@@ -25,7 +25,6 @@ class UserRepository implements IUserRepository
     {
         //
         return User::create($user);
-        
     }
 
     public function deleteUser(int $userId)
