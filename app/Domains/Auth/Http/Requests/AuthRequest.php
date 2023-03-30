@@ -18,7 +18,10 @@ class AuthRequest extends FormRequest
 
     public function rules()
     {
-        return [];
+        return [
+            'email' => 'email|required|exists:users,email',
+            'password' => 'required'
+        ];
     }
 
     public function messages()
@@ -28,6 +31,9 @@ class AuthRequest extends FormRequest
 
     public function attributes()
     {
-        return[];
+        return[
+            'email' => 'Email de Usuário',
+            'password' => 'Senha'
+        ];
     }
 }

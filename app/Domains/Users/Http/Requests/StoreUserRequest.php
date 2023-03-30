@@ -19,13 +19,14 @@ class StoreUserRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
+      return [
             'name' => 'nullable',
-            'email' => 'required|email',
-            'date_of_birth' => 'required|date_format:d/m/Y',
+            'email' => 'required|email|unique:users',
+            'date_of_birth' => 'required|date_format:Y-m-d',
             'gender' => 'required',
-            'password' => 'required|max:8'
+            'password' => 'required|min:8'
         ];
+
     }
 
     public function messages(): array
